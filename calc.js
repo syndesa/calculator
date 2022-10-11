@@ -1,17 +1,20 @@
 const results = document.querySelector('.results');
 const numbers = [...document.querySelectorAll('.btn-dig')];
 const ac = document.querySelector('#ac')
+const ops = [...document.querySelectorAll('.btn-op')];
 
 numbers.forEach(number => {number.addEventListener('click', updateDisplay) });
 results.addEventListener('DOMSubtreeModified', () => results.textContent.length > 7 ? results.style.fontSize = '70px' : results.style.fontSize = '100px');
 // results.addEventListener('DOMSubtreeModified', displayResize);
 ac.addEventListener('click', () => results.textContent = '')
 
+ops.forEach(op => {op.addEventListener('click', toggleOpStyle) });
 
-// function displayResize(){
-//     const maxChars = 10;
-//     if(results.textContent.length > 3) results.textContent.replace(/.{2}/g, '$&,');
-// }
+function toggleOpStyle(){
+    ops.forEach(op => {op.classList.remove("toggleBtn")});
+    this.classList.toggle("toggleBtn");
+    console.log(this.textContent)
+}
 
 function add(num1, num2){
     return num1 + num2
@@ -36,9 +39,9 @@ function operate(op, num1, num2){
             return add(num1, num2);
         case '-':
             return substract(num1, num2);
-        case '*':
+        case 'x':
             return multiply(num1, num2);
-        case '/':
+        case '÷':
             return divide(num1, num2);
         }
 
