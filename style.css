@@ -12,17 +12,12 @@ body {
 }
 
 
-.results {
-     color: white;
-     grid-column: 1/ span 4;
-     justify-self: flex-end;
-}
 
 .container {
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(6, 100px);
-    gap: 15px 15px;
+    gap: 5px 5px;
     justify-items: center;
     align-items: center;
     background-color: black;
@@ -30,8 +25,10 @@ body {
     height: 80%;
     border-radius: 20px;
     padding-top: 125px;
+    
 
 }
+
 
 
 .btn-cmd {
@@ -50,6 +47,7 @@ body {
 }
 
 .container>* {
+    margin-top: 150px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,7 +68,16 @@ body {
     
 }
 
-
-.container>.results{
+.container>.results {
+    color: white;
+    grid-column: 1/ span 4;
+    justify-content: flex-end;
     font-size: 100px;
+    text-align: right;
+    width: 100%;
+    max-width: 400px;
+
+    
 }
+
+
