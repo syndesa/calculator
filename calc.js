@@ -1,39 +1,59 @@
 const results = document.querySelector('.results');
 const numbers = [...document.querySelectorAll('.btn-dig')];
-const ac = document.querySelector('#ac')
+const ac = document.querySelector('#ac');
+const eq = document.querySelector('.btn-eql');
 const ops = [...document.querySelectorAll('.btn-op')];
+
+let previousValue = null;
+let exprOperand = null; 
 
 numbers.forEach(number => {number.addEventListener('click', updateDisplay) });
 results.addEventListener('DOMSubtreeModified', () => results.textContent.length > 7 ? results.style.fontSize = '70px' : results.style.fontSize = '100px');
-// results.addEventListener('DOMSubtreeModified', displayResize);
-ac.addEventListener('click', () => results.textContent = '')
-
+ac.addEventListener('click', () => results.textContent = '');
 ops.forEach(op => {op.addEventListener('click', toggleOpStyle) });
+eq.addEventListener('click', expressionEquals);
+eq.addEventListener('transitionend', () => eq.classList.remove('toggleBtn'));
+
+function expressionEquals() {
+    this.classList.toggle('toggleBtn');
+    operate(exprOperand, previousValue, results.textContent);
+}
 
 function toggleOpStyle(){
     ops.forEach(op => {op.classList.remove("toggleBtn")});
     this.classList.toggle("toggleBtn");
-    console.log(this.textContent)
+    exprOperand = this.textContent;
+    if (this.textContent !== '=') previousValue = results.textContent;
 }
 
 function add(num1, num2){
-    return num1 + num2
+    const added = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) + parseFloat(num2)).toFixed(2) : (parseInt(num1) + parseInt(num2));
+    results.textContent = added.toString();
+    resetVars();
 }
 
 function substract(num1, num2){
-    return num1 - num2
+    const subbed = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) - parseFloat(num2)).toFixed(2) : (parseInt(num1) - parseInt(num2));
+    results.textContent = subbed.toString();
+    resetVars();
 }
 
 function multiply(num1, num2){
-    return num1 * num2
+    const multiplied = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) * parseFloat(num2)).toFixed(2) : (parseInt(num1) * parseInt(num2));
+    console.log(multiplied)
+    results.textContent = multiplied.toString();
+    resetVars();
 }
 
 function divide(num1, num2){
-    return num1 / num2
+    const divided = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) / parseFloat(num2)).toFixed(2) : (parseInt(num1) / parseInt(num2))
+    results.textContent = divided.toString();
+    resetVars();
 }
 
 
 function operate(op, num1, num2){
+    console.log(`OP = ${op}, num1 = ${num1}, num2 = ${num2}`);
     switch(op){
         case '+':
             return add(num1, num2);
@@ -49,6 +69,11 @@ function operate(op, num1, num2){
 
 
 function updateDisplay(){
+    if (results.textContent.length !== 0 && previousValue !== null && ops.some(op => op.classList.contains('toggleBtn'))) {
+        results.textContent = '';
+        ops.forEach(op => {op.classList.remove("toggleBtn")});
+    } 
+
     if (results.textContent.length > 9) return;
     if (results.textContent === '0'){
         if (this.textContent === '0') {
@@ -60,8 +85,12 @@ function updateDisplay(){
             return results.textContent = this.textContent;
         }
     }  else {
-        return results.textContent = results.textContent + this.textContent;
+        return results.textContent += this.textContent;
     }
-    console.log(this.textContent);
     
+}
+
+function resetVars() {
+    previousValue = null;
+    exprOperand = null;
 }

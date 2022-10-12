@@ -41,7 +41,7 @@ body {
     color: white;
 }
 
-.btn-op {
+.btn-op, .btn-eql {
     background-color: orange;
     color: white;
 }
