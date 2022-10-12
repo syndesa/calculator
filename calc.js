@@ -4,6 +4,7 @@ const ac = document.querySelector('#ac');
 const eq = document.querySelector('.btn-eql');
 const ops = [...document.querySelectorAll('.btn-op')];
 const pct = document.querySelector('#pct');
+const neg = document.querySelector('#neg');
 
 let previousValue = null;
 let exprOperand = null; 
@@ -15,6 +16,7 @@ ops.forEach(op => {op.addEventListener('click', toggleOpStyle) });
 eq.addEventListener('click', expressionEquals);
 eq.addEventListener('transitionend', () => eq.classList.remove('toggleBtn'));
 pct.addEventListener('click', toPercentage);
+neg.addEventListener('click', () => results.textContent.includes('-') ? results.textContent = results.textContent.replace('-', '') : results.textContent = '-' + results.textContent )
 
 function toPercentage(){
     results.textContent = results.textContent.includes('.') ? (results.textContent =  (parseFLoat(results.textContent)/100).toString()) : (results.textContent = (parseInt(results.textContent)/100).toString());
