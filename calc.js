@@ -3,16 +3,22 @@ const numbers = [...document.querySelectorAll('.btn-dig')];
 const ac = document.querySelector('#ac');
 const eq = document.querySelector('.btn-eql');
 const ops = [...document.querySelectorAll('.btn-op')];
+const pct = document.querySelector('#pct');
 
 let previousValue = null;
 let exprOperand = null; 
 
 numbers.forEach(number => {number.addEventListener('click', updateDisplay) });
 results.addEventListener('DOMSubtreeModified', () => results.textContent.length > 7 ? results.style.fontSize = '70px' : results.style.fontSize = '100px');
-ac.addEventListener('click', () => results.textContent = '');
+ac.addEventListener('click', () => results.textContent = '0');
 ops.forEach(op => {op.addEventListener('click', toggleOpStyle) });
 eq.addEventListener('click', expressionEquals);
 eq.addEventListener('transitionend', () => eq.classList.remove('toggleBtn'));
+pct.addEventListener('click', toPercentage);
+
+function toPercentage(){
+    results.textContent = results.textContent.includes('.') ? (results.textContent =  (parseFLoat(results.textContent)/100).toString()) : (results.textContent = (parseInt(results.textContent)/100).toString());
+}
 
 function expressionEquals() {
     this.classList.toggle('toggleBtn');
