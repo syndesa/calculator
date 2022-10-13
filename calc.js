@@ -1,3 +1,4 @@
+const clickSound = new Audio('./audio_fonts/COMCell_Iphone touch sound 2 (ID 2038)_BSB.wav');
 const results = document.querySelector('.results');
 const numbers = [...document.querySelectorAll('.btn-dig')];
 const ac = document.querySelector('#ac');
@@ -6,17 +7,30 @@ const ops = [...document.querySelectorAll('.btn-op')];
 const pct = document.querySelector('#pct');
 const neg = document.querySelector('#neg');
 
+
+
 let previousValue = null;
 let exprOperand = null; 
 
+
+
+
 numbers.forEach(number => {number.addEventListener('click', updateDisplay) });
+
 results.addEventListener('DOMSubtreeModified', () => results.textContent.length > 7 ? results.style.fontSize = '70px' : results.style.fontSize = '100px');
-ac.addEventListener('click', () => results.textContent = '0');
+
+ac.addEventListener('click', () => {
+    playSound();
+    results.textContent = '0'});
+
+
 ops.forEach(op => {op.addEventListener('click', toggleOpStyle) });
+
 eq.addEventListener('click', expressionEquals);
 eq.addEventListener('transitionend', () => eq.classList.remove('toggleBtn'));
 pct.addEventListener('click', toPercentage);
 neg.addEventListener('click', () => results.textContent.includes('-') ? results.textContent = results.textContent.replace('-', '') : results.textContent = '-' + results.textContent )
+
 
 function toPercentage(){
     results.textContent = results.textContent.includes('.') ? (results.textContent =  (parseFLoat(results.textContent)/100).toString()) : (results.textContent = (parseInt(results.textContent)/100).toString());
@@ -101,4 +115,9 @@ function updateDisplay(){
 function resetVars() {
     previousValue = null;
     exprOperand = null;
+}
+
+function playSound(){
+    clickSound.currentTime = 0;
+    clickSound.play()
 }

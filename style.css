@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'San Francisco';
-    src: url('/home/dev/Downloads/SanFranciscoDisplay-Regular.otf');
+    src: url('./audio_fonts/SanFranciscoDisplay-Regular.otf');
 }
 
 body {
