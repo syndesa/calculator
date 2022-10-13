@@ -80,14 +80,14 @@ function substract(num1, num2){
 
 function multiply(num1, num2){
     const multiplied = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) * parseFloat(num2)).toFixed(2) : (parseInt(num1) * parseInt(num2));
-    console.log(multiplied)
     results.textContent = multiplied.toString();
     resetVars();
 }
 
 function divide(num1, num2){
-    const divided = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) / parseFloat(num2)).toFixed(2) : (parseInt(num1) / parseInt(num2))
-    results.textContent = divided.toString();
+    const divided = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) / parseFloat(num2)).toFixed(2) : (parseInt(num1) / parseInt(num2));
+    results.textContent = divided.toFixed(2).toString();
+    console.log(divided)
     resetVars();
 }
 
