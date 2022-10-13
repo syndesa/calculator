@@ -116,14 +116,14 @@ function updateDisplay(fncaller){
     } 
 
     if (results.textContent.length > 9) return;
-    if (results.textContent === '0'){
+    if (results.textContent === '0' || results.textContent === '-0'){
         if (fncaller.textContent === '0') {
             return;
         } else if (fncaller.textContent === '.'){
             return results.textContent += fncaller.textContent;
             
         } else {
-            return results.textContent = fncaller.textContent;
+            return (results.textContent === ('-0')) ? results.textContent = '-' + fncaller.textContent : results.textContent = fncaller.textContent;
         }
     }  else {
         return results.textContent += fncaller.textContent;
