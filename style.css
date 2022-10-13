@@ -26,10 +26,11 @@ body {
     align-items: center;
     background-color: black;
     padding: 20px;
-    height: 80%;
+    height: 800px;
     border-radius: 20px;
     padding-top: 125px;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    
 
 }
 
