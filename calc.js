@@ -15,7 +15,10 @@ let exprOperand = null;
 
 
 
-numbers.forEach(number => {number.addEventListener('click', updateDisplay) });
+numbers.forEach(number => {number.addEventListener('click', () => {
+    playSound();
+    updateDisplay(number);
+})} );
 
 results.addEventListener('DOMSubtreeModified', () => results.textContent.length > 7 ? results.style.fontSize = '70px' : results.style.fontSize = '100px');
 
@@ -24,32 +27,47 @@ ac.addEventListener('click', () => {
     results.textContent = '0'});
 
 
-ops.forEach(op => {op.addEventListener('click', toggleOpStyle) });
+ops.forEach(op => {op.addEventListener('click', () => {
+    playSound();
+    toggleOpStyle(op);
+}) });
 
-eq.addEventListener('click', expressionEquals);
+eq.addEventListener('click', () => {
+    playSound();
+    expressionEquals(eq);
+} );
+
 eq.addEventListener('transitionend', () => eq.classList.remove('toggleBtn'));
-pct.addEventListener('click', toPercentage);
-neg.addEventListener('click', () => results.textContent.includes('-') ? results.textContent = results.textContent.replace('-', '') : results.textContent = '-' + results.textContent )
+
+pct.addEventListener('click', () => {
+    playSound();
+    toPercentage();
+});
+
+neg.addEventListener('click', () => {
+    playSound();
+    results.textContent.includes('-') ? results.textContent = results.textContent.replace('-', '') : results.textContent = '-' + results.textContent;
+} )
 
 
 function toPercentage(){
     results.textContent = results.textContent.includes('.') ? (results.textContent =  (parseFLoat(results.textContent)/100).toString()) : (results.textContent = (parseInt(results.textContent)/100).toString());
 }
 
-function expressionEquals() {
-    this.classList.toggle('toggleBtn');
+function expressionEquals(fncaller) {
+    fncaller.classList.toggle('toggleBtn');
     operate(exprOperand, previousValue, results.textContent);
 }
 
-function toggleOpStyle(){
+function toggleOpStyle(fncaller){
     ops.forEach(op => {op.classList.remove("toggleBtn")});
-    this.classList.toggle("toggleBtn");
-    exprOperand = this.textContent;
-    if (this.textContent !== '=') previousValue = results.textContent;
+    fncaller.classList.toggle("toggleBtn");
+    exprOperand = fncaller.textContent;
+    if (fncaller.textContent !== '=') previousValue = results.textContent;
 }
 
 function add(num1, num2){
-    const added = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) + parseFloat(num2)).toFixed(2) : (parseInt(num1) + parseInt(num2));
+    let added = (num1.includes('.') || num2.includes(".")) ? (parseFloat(num1) + parseFloat(num2)).toFixed(2) : (parseInt(num1) + parseInt(num2));
     results.textContent = added.toString();
     resetVars();
 }
@@ -90,7 +108,8 @@ function operate(op, num1, num2){
     }
 
 
-function updateDisplay(){
+function updateDisplay(fncaller){
+    console.log(fncaller.textContent)
     if (results.textContent.length !== 0 && previousValue !== null && ops.some(op => op.classList.contains('toggleBtn'))) {
         results.textContent = '';
         ops.forEach(op => {op.classList.remove("toggleBtn")});
@@ -98,16 +117,16 @@ function updateDisplay(){
 
     if (results.textContent.length > 9) return;
     if (results.textContent === '0'){
-        if (this.textContent === '0') {
+        if (fncaller.textContent === '0') {
             return;
-        } else if (this.textContent === '.'){
-            return results.textContent += this.textContent;
+        } else if (fncaller.textContent === '.'){
+            return results.textContent += fncaller.textContent;
             
         } else {
-            return results.textContent = this.textContent;
+            return results.textContent = fncaller.textContent;
         }
     }  else {
-        return results.textContent += this.textContent;
+        return results.textContent += fncaller.textContent;
     }
     
 }
